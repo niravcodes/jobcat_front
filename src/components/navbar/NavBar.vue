@@ -1,7 +1,9 @@
 <template>
   <div id="navcontainer">
     <div id="logo">
-      <img src="@/assets/jobcat-navbar-logo.png">
+      <router-link to="/">
+        <img src="@/assets/jobcat-navbar-logo.png">
+      </router-link>
     </div>
     <div id="search" class="vertical-horizontal-center"></div>
     <div id="icons" class="vertical-horizontal-center">

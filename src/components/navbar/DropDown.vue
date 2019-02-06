@@ -3,7 +3,10 @@
     <button @click="toggle_active">
       <i :class="icon"></i>
     </button>
-    <div id="dropdialog" v-if="active"></div>
+    <div id="dropdialog" v-if="active">
+      <router-link to="resume">Resume</router-link>
+      <router-link to="settings">Settings</router-link>
+    </div>
   </div>
 </template>
 <script>

@@ -2,6 +2,10 @@
   <div id="chattalk">
     <div id="message_list">
       <chat-message msg="hello"/>
+      <chat-message msg="hello"/>
+      <chat-message msg="hello"/>
+      <chat-message msg="hello"/>
+      <chat-message msg="hello"/>
     </div>
     <div id="input">
       <input type="text">
@@ -17,6 +21,9 @@
     width: 100%;
     padding: 5px 20px;
   }
+}
+#message_list {
+  overflow-y: auto;
 }
 </style>
 

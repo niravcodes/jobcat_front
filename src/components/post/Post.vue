@@ -75,6 +75,7 @@ export default {
     @extend %reset-Button;
     width: 100%;
     padding: 15px;
+    text-align: left;
   }
 }
 </style>
