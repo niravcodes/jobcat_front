@@ -5,7 +5,6 @@
 </template>
 
 <script>
-// @ is an alias to /src
 import ListPosts from "@/components/post/ListPost.vue";
 export default {
   name: "home",

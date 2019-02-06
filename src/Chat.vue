@@ -1,14 +1,29 @@
 <template>
-  <div id="chat">Hello I am chat</div>
+  <div id="chat">
+    <chat-people/>
+    <chat-talk/>
+  </div>
 </template>
 <script>
-export default {};
+import ChatPeople from "@/components/chat/ChatPeople.vue";
+import ChatTalk from "@/components/chat/ChatTalk.vue";
+export default {
+  components: {
+    ChatPeople,
+    ChatTalk
+  }
+};
 </script>
 
 <style lang="scss" scoped>
 #chat {
   height: 100vh;
+  width: 25%;
   display: inline-block;
-  background: #333;
+  position: fixed;
+  right: 0px;
+
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
 }
 </style>
