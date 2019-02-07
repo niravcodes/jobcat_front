@@ -1,20 +1,38 @@
 <template>
   <div id="dropdown" ref="dropdown" @keydown.esc="active = false">
     <button @click="toggle_active">
-      <i :class="icon"></i>
+      <i class="far fa-user-circle"></i>
     </button>
     <div id="dropdialog" v-if="active">
-      <router-link to="resume">Resume</router-link>
-      <router-link to="settings">Settings</router-link>
+      <router-link
+        class="routerlink"
+        v-for="item in profile"
+        :to="item.link"
+        :key="item.key"
+      >{{ item.name }}</router-link>
     </div>
   </div>
 </template>
 <script>
 export default {
-  props: ["icon", "data_endpoint", "path_to_page", "name"],
+  props: ["data_endpoint", "path_to_page", "name"],
   data: function() {
     return {
-      active: false
+      active: false,
+      profile: [
+        {
+          name: "Resume",
+          link: "resume"
+        },
+        {
+          name: "Settings",
+          link: "settings"
+        },
+        {
+          name: "Logout",
+          link: "logout"
+        }
+      ]
     };
   },
   methods: {
@@ -38,24 +56,33 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import "../../assets/resets";
-@import "variables";
+@import "../../../assets/resets";
+@import "../variables";
 #dropdown {
   position: relative;
   button {
     @extend %reset-Button;
   }
 }
-
+.routerlink {
+  display: block;
+  padding: 10px;
+  color: #333;
+  text-decoration: none;
+  &:hover {
+    color: #fff;
+    background: #333;
+  }
+}
 #dropdialog {
   position: absolute;
   top: 50px;
   left: -$dropdown_width/2 + 19px;
   overflow: hidden;
   width: $dropdown_width;
-  height: $dropdown_height;
-  background: red;
+  max-height: $dropdown_height;
+  background: white;
+  border: solid 1px black;
 }
 </style>
-
 

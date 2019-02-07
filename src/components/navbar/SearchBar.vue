@@ -7,7 +7,7 @@
       v-model="search_text"
       @input="lookup_search"
     >
-    <quick-search v-if="quick_search_activated && activated"/>
+    <quick-search v-if="quick_search_activated && activated" :search_text="search_text"/>
     <button @click="toggle_search">
       <i class="fas fa-search"></i>
     </button>

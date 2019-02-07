@@ -8,13 +8,10 @@
 </template>
 
 <style lang="scss">
-* {
-  margin: 0px;
-  padding: 0px;
-  box-sizing: border-box;
-}
 #app {
-  margin-top: 50px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 100vh;
 }
 .centerblock {
   width: 70%;

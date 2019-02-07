@@ -44,6 +44,7 @@ export default {
 <style lang="scss" scoped>
 #postlist {
   margin-top: 40px;
+  margin-left: 50px;
 }
 </style>
 
