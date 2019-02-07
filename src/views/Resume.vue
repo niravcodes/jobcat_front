@@ -3,7 +3,8 @@
     <div class="image">
       <img src="img/testhead2.jpg">
     </div>
-    <div class="details">Name : Jenifer Lopez
+    <div class="details">
+      <div class="name">Name : Jenifer Lopez</div>
       <br>Boobies : Great
       <br>Something else : Yeah whatever
       <br>

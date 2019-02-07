@@ -24,6 +24,6 @@ export default {
   right: 0px;
 
   display: grid;
-  grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-rows: minmax(0, 0.75fr) minmax(0, 1.25fr);
 }
 </style>

@@ -4,12 +4,56 @@
       <i class="far fa-check-circle"></i>
     </button>
     <div id="dropdialog" v-if="active">
-      <router-link
-        class="routerlink"
-        v-for="item in profile"
-        :to="item.link"
-        :key="item.key"
-      >{{ item.name }}</router-link>
+      <ul>
+        <li>
+          <div class="image">
+            <img src="img/testhead2.jpg">
+          </div>
+          <div class="notification_text">
+            <div class="title">New Comment:</div>
+            <div class="text">Nirav commentted on your post</div>
+          </div>
+        </li>
+        <li>
+          <div class="image">
+            <img src="img/testhead2.jpg">
+          </div>
+          <div class="notification_text">
+            <div class="title">New Comment:</div>
+            <div class="text">Nirav commentted on your post</div>
+          </div>
+        </li>
+        <li>
+          <div class="image">
+            <img src="img/testhead2.jpg">
+          </div>
+          <div class="notification_text">
+            <div class="title">New Comment:</div>
+            <div class="text">Nirav commentted on your post</div>
+          </div>
+        </li>
+        <li>
+          <div class="image">
+            <img src="img/testhead2.jpg">
+          </div>
+          <div class="notification_text">
+            <div class="title">New Comment:</div>
+            <div class="text">Nirav commentted on your post</div>
+          </div>
+        </li>
+        <li>
+          <div class="image">
+            <img src="img/testhead2.jpg">
+          </div>
+          <div class="notification_text">
+            <div class="title">New Comment:</div>
+            <div class="text">Nirav commentted on your post</div>
+          </div>
+        </li>
+      </ul>
+      <div id="allnotifications">
+        <router-link to="notifications">View all Todos</router-link>
+      </div>
     </div>
   </div>
 </template>
@@ -18,21 +62,7 @@ export default {
   props: ["data_endpoint", "path_to_page", "name"],
   data: function() {
     return {
-      active: false,
-      profile: [
-        {
-          name: "Resume",
-          link: "resume"
-        },
-        {
-          name: "Settings",
-          link: "settings"
-        },
-        {
-          name: "Logout",
-          link: "logout"
-        }
-      ]
+      active: false
     };
   },
   methods: {
@@ -58,31 +88,40 @@ export default {
 <style lang="scss" scoped>
 @import "../../../assets/resets";
 @import "../variables";
+@import "../navbarGlobal";
 #dropdown {
   position: relative;
   button {
     @extend %reset-Button;
   }
 }
-.routerlink {
-  display: block;
-  padding: 10px;
-  color: #333;
-  text-decoration: none;
-  &:hover {
-    color: #fff;
-    background: #333;
-  }
-}
 #dropdialog {
   position: absolute;
   top: 50px;
-  left: -$dropdown_width/2 + 19px;
+  left: -$notification_width/2 + 19px;
   overflow: hidden;
-  width: $dropdown_width;
+  width: $notification_width;
   max-height: $dropdown_height;
   background: white;
   border: solid 1px black;
+
+  display: grid;
+  grid-template-rows: 1fr auto;
+}
+.notification_text {
+  padding-left: 15px;
+  .title {
+    font-weight: bold;
+    display: inline;
+    &::after {
+      content: " ";
+    }
+  }
+  .text {
+    display: inline;
+  }
+}
+#allnotifications {
+  padding: 10px;
 }
 </style>
-

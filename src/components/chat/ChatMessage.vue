@@ -17,6 +17,7 @@
 #message {
   display: grid;
   grid-template-columns: 50px 1fr;
+  margin-bottom: 10px;
 
   .text {
     padding: 0 20px;

@@ -11,8 +11,7 @@
 #ppldisplay {
   display: grid;
   grid-template-columns: 50px 1fr;
-
-  margin: 10px 0;
+  padding: 10px;
 
   .name {
     padding: 0 20px;
@@ -20,6 +19,10 @@
     align-items: center;
 
     font-size: 20px;
+  }
+  &:hover {
+    background: black;
+    color: white;
   }
 }
 .image {
