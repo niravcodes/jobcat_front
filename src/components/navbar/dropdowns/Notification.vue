@@ -5,51 +5,11 @@
     </button>
     <div id="dropdialog" v-if="active">
       <ul>
-        <li>
-          <div class="image">
-            <img src="img/testhead2.jpg">
-          </div>
-          <div class="notification_text">
-            <div class="title">New Comment:</div>
-            <div class="text">Nirav commentted on your post</div>
-          </div>
-        </li>
-        <li>
-          <div class="image">
-            <img src="img/testhead2.jpg">
-          </div>
-          <div class="notification_text">
-            <div class="title">New Comment:</div>
-            <div class="text">Nirav commentted on your post</div>
-          </div>
-        </li>
-        <li>
-          <div class="image">
-            <img src="img/testhead2.jpg">
-          </div>
-          <div class="notification_text">
-            <div class="title">New Comment:</div>
-            <div class="text">Nirav commentted on your post</div>
-          </div>
-        </li>
-        <li>
-          <div class="image">
-            <img src="img/testhead2.jpg">
-          </div>
-          <div class="notification_text">
-            <div class="title">New Comment:</div>
-            <div class="text">Nirav commentted on your post</div>
-          </div>
-        </li>
-        <li>
-          <div class="image">
-            <img src="img/testhead2.jpg">
-          </div>
-          <div class="notification_text">
-            <div class="title">New Comment:</div>
-            <div class="text">Nirav commentted on your post</div>
-          </div>
-        </li>
+        <notification-item
+          v-for="notification in notifications"
+          :key="notification.id"
+          :notification_id="notification.id"
+        />
       </ul>
       <div id="allnotifications">
         <router-link to="notifications">View all notifications</router-link>
@@ -58,6 +18,7 @@
   </div>
 </template>
 <script>
+import NotificationItem from "./NotificationItem.vue";
 export default {
   props: ["data_endpoint", "path_to_page", "name"],
   data: function() {
@@ -77,11 +38,19 @@ export default {
       }
     }
   },
+  computed: {
+    notifications() {
+      return this.$store.getters.notifications;
+    }
+  },
   created: function() {
     document.addEventListener("click", this.deactivate_on_nofocus);
   },
   destroyed: function() {
     document.removeEventListener("click", this.deactivate_on_nofocus);
+  },
+  components: {
+    NotificationItem
   }
 };
 </script>
@@ -107,19 +76,6 @@ export default {
 
   display: grid;
   grid-template-rows: 1fr auto;
-}
-.notification_text {
-  padding-left: 15px;
-  .title {
-    font-weight: bold;
-    display: inline;
-    &::after {
-      content: " ";
-    }
-  }
-  .text {
-    display: inline;
-  }
 }
 #allnotifications {
   padding: 10px;

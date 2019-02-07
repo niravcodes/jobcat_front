@@ -13,5 +13,6 @@ new Vue({
 }).$mount("#app");
 
 new Vue({
+  store,
   render: h => h(Chat)
 }).$mount("#chat");

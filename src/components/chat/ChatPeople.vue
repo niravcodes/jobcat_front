@@ -1,14 +1,7 @@
 <template>
   <div id="chatpeople">
     <div id="people_list">
-      <people-display img="testhead.png"/>
-      <people-display img="testhead2.jpg"/>
-      <people-display img="testhead2.jpg"/>
-      <people-display img="testhead2.jpg"/>
-      <people-display img="testhead2.jpg"/>
-      <people-display img="testhead2.jpg"/>
-      <people-display img="testhead2.jpg"/>
-      <people-display img="testhead3.jpg"/>
+      <people-display v-for="people in chat_people" :key="people.id" :people_id="people.id"/>
     </div>
     <div id="search">
       <input type="text" v-model="search_text">
@@ -26,6 +19,11 @@ export default {
   },
   components: {
     PeopleDisplay
+  },
+  computed: {
+    chat_people() {
+      return this.$store.getters.chat_people;
+    }
   }
 };
 </script>
@@ -37,7 +35,7 @@ export default {
   grid-template-rows: 1fr auto;
 
   #people_list {
-    overflow-x: auto;
+    overflow-y: scroll;
   }
 
   #search {

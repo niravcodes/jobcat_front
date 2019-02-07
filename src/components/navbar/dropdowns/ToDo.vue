@@ -5,59 +5,16 @@
     </button>
     <div id="dropdialog" v-if="active">
       <ul>
-        <li>
-          <div class="image">
-            <img src="img/testhead2.jpg">
-          </div>
-          <div class="notification_text">
-            <div class="title">New Comment:</div>
-            <div class="text">Nirav commentted on your post</div>
-          </div>
-        </li>
-        <li>
-          <div class="image">
-            <img src="img/testhead2.jpg">
-          </div>
-          <div class="notification_text">
-            <div class="title">New Comment:</div>
-            <div class="text">Nirav commentted on your post</div>
-          </div>
-        </li>
-        <li>
-          <div class="image">
-            <img src="img/testhead2.jpg">
-          </div>
-          <div class="notification_text">
-            <div class="title">New Comment:</div>
-            <div class="text">Nirav commentted on your post</div>
-          </div>
-        </li>
-        <li>
-          <div class="image">
-            <img src="img/testhead2.jpg">
-          </div>
-          <div class="notification_text">
-            <div class="title">New Comment:</div>
-            <div class="text">Nirav commentted on your post</div>
-          </div>
-        </li>
-        <li>
-          <div class="image">
-            <img src="img/testhead2.jpg">
-          </div>
-          <div class="notification_text">
-            <div class="title">New Comment:</div>
-            <div class="text">Nirav commentted on your post</div>
-          </div>
-        </li>
+        <todo-item v-for="todo in todos" :key="todo.id" :todo_id="todo.id"/>
       </ul>
-      <div id="allnotifications">
-        <router-link to="notifications">View all Todos</router-link>
+      <div id="alltodos">
+        <router-link to="todos">View all Todos</router-link>
       </div>
     </div>
   </div>
 </template>
 <script>
+import TodoItem from "./TodoItem.vue";
 export default {
   props: ["data_endpoint", "path_to_page", "name"],
   data: function() {
@@ -77,18 +34,25 @@ export default {
       }
     }
   },
+  computed: {
+    todos() {
+      return this.$store.getters.todos;
+    }
+  },
   created: function() {
     document.addEventListener("click", this.deactivate_on_nofocus);
   },
   destroyed: function() {
     document.removeEventListener("click", this.deactivate_on_nofocus);
+  },
+  components: {
+    TodoItem
   }
 };
 </script>
 <style lang="scss" scoped>
 @import "../../../assets/resets";
 @import "../variables";
-@import "../navbarGlobal";
 #dropdown {
   position: relative;
   button {
@@ -108,20 +72,11 @@ export default {
   display: grid;
   grid-template-rows: 1fr auto;
 }
-.notification_text {
-  padding-left: 15px;
-  .title {
-    font-weight: bold;
-    display: inline;
-    &::after {
-      content: " ";
-    }
-  }
-  .text {
-    display: inline;
-  }
-}
-#allnotifications {
+#alltodos {
   padding: 10px;
+}
+
+ul {
+  overflow-y: auto;
 }
 </style>

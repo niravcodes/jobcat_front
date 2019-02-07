@@ -1,14 +1,14 @@
 <template>
-  <div id="ppldisplay">
+  <div class="ppldisplay">
     <div class="image">
-      <img :src="img_location">
+      <img :src="img">
     </div>
-    <div class="name">Hello there</div>
+    <div class="name">{{ people_data.name }}</div>
   </div>
 </template>
 
 <style lang="scss" scoped>
-#ppldisplay {
+.ppldisplay {
   display: grid;
   grid-template-columns: 50px 1fr;
   padding: 10px;
@@ -41,10 +41,14 @@
 
 <script>
 export default {
-  props: ["img", "name"],
+  props: ["people_id"],
+
   computed: {
-    img_location: function() {
-      return "img/" + this.img;
+    people_data() {
+      return this.$store.getters.chat_people_by_id(this.people_id);
+    },
+    img() {
+      return "img/" + this.people_data.image;
     }
   }
 };
