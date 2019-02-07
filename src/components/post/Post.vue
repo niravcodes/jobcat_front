@@ -4,11 +4,11 @@
       <img :src="img_location">
     </div>
     <div class="title">
-      <div class="name">{{ post_creator }}</div>
-      <div class="nameinfo">{{ creator_info }}</div>
+      <div class="name">{{ user_data.name }}</div>
+      <div class="nameinfo">{{ user_data.description }}</div>
     </div>
     <div></div>
-    <div class="text">{{ post_data }}</div>
+    <div class="text">{{ post_data.post_text }}</div>
     <div></div>
     <div class="buttons">
       <button>Submit Proposal</button>
@@ -19,14 +19,20 @@
 </template>
 <script>
 export default {
-  props: ["post_id", "post_creator", "creator_info", "post_data", "img"],
+  props: ["post_id"],
   data: function() {
     return {};
   },
   methods: {},
   computed: {
+    post_data() {
+      return this.$store.getters.post_by_id(this.post_id);
+    },
+    user_data() {
+      return this.$store.getters.get_user_by_id(this.post_data.user_id);
+    },
     img_location: function() {
-      return "img/" + this.img;
+      return "img/" + this.user_data.image;
     }
   }
 };

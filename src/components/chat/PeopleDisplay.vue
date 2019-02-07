@@ -3,7 +3,7 @@
     <div class="image">
       <img :src="img">
     </div>
-    <div class="name">{{ people_data.name }}</div>
+    <div class="name">{{ user_data.name }}</div>
   </div>
 </template>
 
@@ -41,14 +41,17 @@
 
 <script>
 export default {
-  props: ["people_id"],
+  props: ["sort_id"],
 
   computed: {
     people_data() {
-      return this.$store.getters.chat_people_by_id(this.people_id);
+      return this.$store.getters.chat_people_by_sort(this.sort_id);
+    },
+    user_data() {
+      return this.$store.getters.get_user_by_id(this.people_data.user_id);
     },
     img() {
-      return "img/" + this.people_data.image;
+      return "img/" + this.user_data.image;
     }
   }
 };
