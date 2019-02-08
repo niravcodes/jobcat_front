@@ -26,6 +26,12 @@
 import NavBar from "@/components/navbar/NavBar.vue";
 import FootBar from "@/components/FootBar.vue";
 export default {
+  created() {
+    if (localStorage.getItem("username") === "Nirav") {
+    } else {
+      alert("intruder");
+    }
+  },
   components: {
     NavBar,
     FootBar
