@@ -33,6 +33,6 @@ export default new Router({
       name: "logout",
       component: () =>
         import(/* webpackChunkName: "logout" */ "./views/Logout.vue")
-    }
+    },
   ]
 });
