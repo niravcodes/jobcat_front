@@ -1,19 +1,47 @@
 <template>
   <div id="quicksearch" ref="quicksearch">
-    <ul>
-      <li>
-        <div class="image">
-          <img src="img/testhead2.jpg">
-        </div>
-        <div class="name">Monkey Parsad</div>
-      </li>
-      <li>
-        <div class="image">
-          <img src="img/testhead2.jpg">
-        </div>
-        <div class="name">Monkey Parsad</div>
-      </li>
-    </ul>
+    <div class="scrolling_div" v-bar>
+      <div>
+        <ul>
+          <li>
+            <div class="image">
+              <img src="img/testhead2.jpg">
+            </div>
+            <div class="name">Monkey Parsad</div>
+          </li>
+          <li>
+            <div class="image">
+              <img src="img/testhead2.jpg">
+            </div>
+            <div class="name">Monkey Parsad</div>
+          </li>
+          <li>
+            <div class="image">
+              <img src="img/testhead2.jpg">
+            </div>
+            <div class="name">Monkey Parsad</div>
+          </li>
+          <li>
+            <div class="image">
+              <img src="img/testhead2.jpg">
+            </div>
+            <div class="name">Monkey Parsad</div>
+          </li>
+          <li>
+            <div class="image">
+              <img src="img/testhead2.jpg">
+            </div>
+            <div class="name">Monkey Parsad</div>
+          </li>
+          <li>
+            <div class="image">
+              <img src="img/testhead2.jpg">
+            </div>
+            <div class="name">Monkey Parsad</div>
+          </li>
+        </ul>
+      </div>
+    </div>
 
     <div id="search_further">
       <router-link to="/fullsearch">Search {{ search_text }}</router-link>

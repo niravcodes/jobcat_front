@@ -4,9 +4,13 @@
       <i class="far fa-check-circle"></i>
     </button>
     <div id="dropdialog" v-if="active">
-      <ul>
-        <todo-item v-for="todo in todos" :key="todo.id" :todo_id="todo.id"/>
-      </ul>
+      <div class="scrolling_div" v-bar>
+        <div>
+          <ul>
+            <todo-item v-for="todo in todos" :key="todo.id" :todo_id="todo.id"/>
+          </ul>
+        </div>
+      </div>
       <div id="alltodos">
         <router-link to="todos">View all Todos</router-link>
       </div>

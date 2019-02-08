@@ -1,11 +1,13 @@
 <template>
   <div id="chattalk">
-    <div id="message_list">
-      <chat-message msg="hello"/>
-      <chat-message msg="hello"/>
-      <chat-message msg="hello"/>
-      <chat-message msg="hello"/>
-      <chat-message msg="hello"/>
+    <div id="message_list" v-bar>
+      <div>
+        <chat-message msg="hello"/>
+        <chat-message msg="hello"/>
+        <chat-message msg="hello"/>
+        <chat-message msg="hello"/>
+        <chat-message msg="hello"/>
+      </div>
     </div>
     <div id="input">
       <input type="text">

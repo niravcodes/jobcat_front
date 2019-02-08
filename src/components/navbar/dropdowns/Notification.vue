@@ -4,13 +4,17 @@
       <i class="far fa-bell"></i>
     </button>
     <div id="dropdialog" v-if="active">
-      <ul>
-        <notification-item
-          v-for="notification in notifications"
-          :key="notification.id"
-          :notification_id="notification.id"
-        />
-      </ul>
+      <div class="scrolling_div" v-bar>
+        <div>
+          <ul>
+            <notification-item
+              v-for="notification in notifications"
+              :key="notification.id"
+              :notification_id="notification.id"
+            />
+          </ul>
+        </div>
+      </div>
       <div id="allnotifications">
         <router-link to="notifications">View all notifications</router-link>
       </div>
@@ -76,6 +80,9 @@ export default {
 
   display: grid;
   grid-template-rows: 1fr auto;
+}
+.scrolling_div {
+  overflow-y: auto;
 }
 #allnotifications {
   padding: 10px;

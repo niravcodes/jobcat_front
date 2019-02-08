@@ -1,11 +1,13 @@
 <template>
   <div id="chatpeople">
-    <div id="people_list">
-      <people-display
-        v-for="people in chat_people_filtered"
-        :key="people.sort_id"
-        :sort_id="people.sort_id"
-      />
+    <div id="people_list" v-bar>
+      <div>
+        <people-display
+          v-for="people in chat_people_filtered"
+          :key="people.sort_id"
+          :sort_id="people.sort_id"
+        />
+      </div>
     </div>
     <div id="search">
       <input type="text" v-model="search_text">

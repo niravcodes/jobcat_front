@@ -1,14 +1,17 @@
 <template>
-  <div id="app">
-    <div class="centerblock">
-      <nav-bar/>
-      <router-view/>
+  <div class="app" v-bar>
+    <div>
+      <div class="centerblock">
+        <nav-bar/>
+        <router-view/>
+        <foot-bar/>
+      </div>
     </div>
   </div>
 </template>
 
-<style lang="scss">
-#app {
+<style lang="scss" scoped>
+.app {
   overflow-y: auto;
   overflow-x: hidden;
   height: 100vh;
@@ -21,9 +24,11 @@
 
 <script>
 import NavBar from "@/components/navbar/NavBar.vue";
+import FootBar from "@/components/FootBar.vue";
 export default {
   components: {
-    NavBar
+    NavBar,
+    FootBar
   }
 };
 </script>

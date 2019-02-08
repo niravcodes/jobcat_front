@@ -8,9 +8,9 @@ export default new Vuex.Store({
     users: [
       {
         id: 0,
-        name: "Jennifer Lopez",
+        name: "Prasamsha Sigdel",
         image: "testhead3.jpg",
-        description: "Dancer in local bar"
+        description: "Certified Heart Breaker"
       },
       {
         id: 1,
@@ -33,7 +33,7 @@ export default new Vuex.Store({
     ],
     posts: [
       {
-        user_id: 1,
+        user_id: 0,
         id: 1,
         post_text:
           "Hello there deliah. My name is Nirav and even though I have never written a song for you, I'd like you to know that in the many million years of solitude of Colonel Aureliano Buendia, The only thing he thought of while making those little gold fishes with scales of madness and lead and death. Was of you. Cus. It's you its uou its all for you evewryting I do tell you all the time heaven is aplce on earth for yo."
@@ -62,6 +62,18 @@ export default new Vuex.Store({
         title: "Respond to the Inquiry",
         fulltext:
           "Someone has inquired about a job you posted. Click here to reply"
+      },
+      {
+        id: 3,
+        title: "Fuck the police",
+        fulltext:
+          "No, I'm really sorry. I don't want to fuck the police. This is just the first thing that popped in my head when thinking of thing to write."
+      },
+      {
+        id: 4,
+        title: "Hey there deliah",
+        fulltext:
+          "One day, the skeleton child laughed. His bones rattled inside his body and made him cry for his organs."
       }
     ],
 
@@ -76,9 +88,26 @@ export default new Vuex.Store({
         title: "Your Job Selected",
         fulltext:
           "Your job has been selected by a prospective freelancer. View more here..."
+      },
+      {
+        id: 2,
+        title: "Your Job Selected",
+        fulltext:
+          "Your job has been selected by a prospective freelancer. View more here..."
+      },
+
+      {
+        id: 3,
+        title: "Your Job Selected",
+        fulltext:
+          "Your job has been selected by a prospective freelancer. View more here..."
       }
     ],
-    chat_people: [{ sort_id: 1, user_id: 2 }, { sort_id: 2, user_id: 3 }]
+    chat_people: [
+      { sort_id: 1, user_id: 2 },
+      { sort_id: 2, user_id: 3 },
+      { sort_id: 3, user_id: 0 }
+    ]
   },
   getters: {
     notifications: state => state.notifications,

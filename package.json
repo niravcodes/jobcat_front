@@ -10,6 +10,7 @@
   "dependencies": {
     "vue": "^2.5.22",
     "vue-router": "^3.0.1",
+    "vuebar": "0.0.20",
     "vuex": "^3.0.1"
   },
   "devDependencies": {
