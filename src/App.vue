@@ -29,7 +29,7 @@ export default {
   created() {
     if (localStorage.getItem("username") === "Nirav") {
     } else {
-      alert("intruder");
+      document.location = "http://localhost:8080/greeting";
     }
   },
   components: {
