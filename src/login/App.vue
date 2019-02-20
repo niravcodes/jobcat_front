@@ -6,8 +6,8 @@
           <img src="@/assets/jobcat-navbar-logo.png">
         </div>
         <div class="name">Jobcat</div>
-        <div class="tagline">The paragdim shift in
-          <br>freelancing frenzy
+        <div class="tagline">The feline goddess of
+          <br>freelancing.
         </div>
       </div>
       <router-view/>

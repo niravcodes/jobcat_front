@@ -6,7 +6,7 @@
       </div>
 
       <div class="details">
-        <div class="name">Prasamsha Sigdel</div>
+        <div class="name">Meri Maya</div>
         <div class="data">
           Currently studies in
           <span class="highlight">Hotel Management Campus</span>
