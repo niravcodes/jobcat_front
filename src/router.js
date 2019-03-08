@@ -34,5 +34,12 @@ export default new Router({
       component: () =>
         import(/* webpackChunkName: "logout" */ "./views/Logout.vue")
     },
+    {
+      path: "/fullsearch",
+      name: "search",
+      params: ["query"],
+      component: () =>
+        import(/* webpackChunkName: "search" */ "./views/Search.vue")
+    },
   ]
 });

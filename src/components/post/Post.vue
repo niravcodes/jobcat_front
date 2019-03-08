@@ -1,5 +1,5 @@
 <template>
-  <div id="post">
+  <div class="post" v-bind:class="{ expandedPost: postExpanded }">
     <div class="image">
       <img :src="img_location">
     </div>
@@ -7,23 +7,34 @@
       <div class="name">{{ user_data.name }}</div>
       <div class="nameinfo">{{ user_data.description }}</div>
     </div>
-    <div></div>
+
     <div class="text">{{ post_data.post_text }}</div>
-    <div></div>
+
+    <proposal v-if="viewProposal"/>
+
     <div class="buttons">
-      <button>Submit Proposal</button>
+      <button @click="toggleProposal">Submit Proposal</button>
       <button>Inquire Further</button>
       <button>View Details</button>
     </div>
   </div>
 </template>
 <script>
+import Proposal from "./Proposal";
 export default {
   props: ["post_id"],
   data: function() {
-    return {};
+    return {
+      viewProposal: false,
+      postExpanded: false
+    };
   },
-  methods: {},
+  methods: {
+    toggleProposal() {
+      this.viewProposal = !this.viewProposal;
+      this.postExpanded = !this.postExpanded;
+    }
+  },
   computed: {
     post_data() {
       return this.$store.getters.post_by_id(this.post_id);
@@ -34,12 +45,18 @@ export default {
     img_location: function() {
       return "img/" + this.user_data.image;
     }
+  },
+  components: {
+    Proposal
   }
 };
 </script>
 <style lang="scss" scoped>
 @import "../../assets/resets";
-#post {
+.expandedPost {
+  grid-template-rows: auto 1fr 1fr;
+}
+.post {
   margin: 20px 0;
   padding: 20px 0;
   display: grid;
@@ -70,11 +87,13 @@ export default {
     padding: 0 20px;
     font-size: 18px;
     font-family: sans-serif;
+    grid-column: 2/3;
   }
 }
 
 .buttons {
   display: grid;
+  grid-column: 2/3;
   grid-template-columns: 1fr 1fr 1fr;
 
   button {

@@ -7,8 +7,8 @@
       capacity to exist. Jobcat is such service. So eat dung, you servile, impotent idiot.
     </div>
     <div class="buttons">
-      <router-link class="button" to="login">Sign In</router-link>
-      <router-link class="button" to="register">Register</router-link>
+      <router-link class="button" to="greeting/login">Sign In</router-link>
+      <router-link class="button" to="greeting/register">Register</router-link>
     </div>
   </div>
 </template>

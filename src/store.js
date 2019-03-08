@@ -5,6 +5,12 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    thisuser: {
+      id: 1,
+      name: "",
+      image: "",
+      image: "",
+    },
     users: [
       {
         id: 0,
@@ -119,7 +125,7 @@ export default new Vuex.Store({
 
     chat_people: state => state.chat_people,
     chat_people_by_sort: state => id =>
-      state.chat_people.slice().filter(val => val.sort_id === id)[0],
+      state.chat_people.filter(val => val.sort_id === id)[0],
 
     get_user_by_id: state => id => state.users.filter(val => val.id === id)[0],
 
