@@ -4,7 +4,7 @@
 <script>
 export default {
   created() {
-    localStorage.setItem("sdlkf");
+    localStorage.removeItem("credentials");
   }
 };
 </script>

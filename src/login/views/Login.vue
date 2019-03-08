@@ -16,7 +16,7 @@
 </style>
 
 <script>
-import axios from "axios";
+import axios from "@/helpers/axios";
 export default {
   data() {
     return {
@@ -33,7 +33,7 @@ export default {
       this.wrongusername = false;
       this.wrongpass = false;
       axios
-        .post("http://localhost:3000/users/login", this.user)
+        .post("users/login", this.user)
         .then(usr => {
           localStorage.setItem("credentials", usr.data.token);
           console.log(localStorage.getItem("credentials"));

@@ -4,7 +4,7 @@ import Chat from "./Chat.vue";
 import router from "./router";
 import store from "./store";
 import Vuebar from "vuebar";
-import axios from 'axios'
+import axios from '@/helpers/axios'
 import "@/components/_scrollbar.scss";
 Vue.config.productionTip = false;
 
@@ -16,18 +16,17 @@ router.beforeEach((to, from, next) => {
     }
 
     axios
-      .post("http://localhost:3000/users/auth")
+      .post("users/auth")
       .then(usr => {
         console.log(usr);
       })
       .catch(err => {
-        alert('error')
-        window.location.href = "/greeting"
+        window.location.href = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/greeting"
       });
     next();
   }
   else {
-    window.location.href = "/greeting"
+    window.location.href = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/greeting"
   }
 })
 
@@ -36,7 +35,7 @@ new Vue({
   store,
   render: h => h(App),
   beforeCreate() {
-    alert("hello");
+    this.$store.commit('getuserinfo')
   }
 }).$mount("#app");
 

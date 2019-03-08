@@ -1,12 +1,18 @@
 <template>
   <div class="resume_page">
     <div class="resume">
-      <div class="image">
-        <img src="img/testhead2.jpg">
+      <div class="image" @click="changeimg">
+        <div class="changeimg" v-if="displayImageUploader">
+          <button class="closebutton" @click="exitupload">
+            <i class="far fa-times-circle"></i>
+          </button>
+          <image-upload/>
+        </div>
+        <img :src="userImage">
       </div>
 
       <div class="details">
-        <div class="name">Meri Maya</div>
+        <div class="name">{{ thisuser.fullname }}</div>
         <div class="data">
           Currently studies in
           <span class="highlight">Hotel Management Campus</span>
@@ -77,6 +83,56 @@
   </div>
 </template>
 
+<script>
+// We use local data and don't overload the Vuex store because it's not frequently needed
+import imageUpload from "@/components/imageUpload";
+let resume = {
+  user_id: 0,
+  data: "BlaBla",
+  registered_at: "blabla"
+};
+export default {
+  data: function() {
+    return {
+      displayImageUploader: false
+    };
+  },
+  methods: {
+    changeimg: function() {
+      this.displayImageUploader = true;
+    },
+    exitupload: function() {
+      setTimeout(() => {
+        this.displayImageUploader = false;
+      }, 10);
+    }
+  },
+  mounted() {
+    let elements = this.$refs.tag_list.getElementsByTagName("li");
+    for (let i = 0; i < elements.length; i++) {
+      elements[i].innerHTML =
+        "<i class='fas fa-search'></i> &nbsp;" + elements[i].innerHTML;
+    }
+  },
+  computed: {
+    userImage: function() {
+      return (
+        "http://localhost:3000/images/" +
+        this.$store.getters.userInfo.avatar +
+        "?" +
+        Date.now()
+      );
+    },
+
+    thisuser: function() {
+      return this.$store.getters.userInfo;
+    }
+  },
+  components: {
+    imageUpload
+  }
+};
+</script>
 <style lang="scss" scoped>
 .resume_page {
   margin-top: 40px;
@@ -121,7 +177,43 @@
   height: 200px;
   border-radius: 30px;
   overflow: hidden;
+  position: relative;
+  z-index: 1;
+  img {
+    width: 100%;
+    min-height: 100%;
+  }
 
+  .closebutton {
+    position: absolute;
+    color: #ccc;
+    background: 0;
+    top: 20px;
+    right: 20px;
+    font-size: 20px;
+    border: none;
+    width: 25px;
+    height: 25px;
+    &:hover {
+      color: #fff;
+    }
+  }
+
+  & > .changeimg {
+    position: absolute;
+    z-index: 100;
+    width: 100%;
+    height: 100%;
+    background: #333;
+    opacity: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0.85;
+    & > .button {
+      background: #fff;
+    }
+  }
   img {
     width: 200px;
   }
@@ -156,20 +248,3 @@
   }
 }
 </style>
-<script>
-// We use local data and don't overload the Vuex store because it's not frequently needed
-let resume = {
-  user_id: 0,
-  data: "BlaBla",
-  registered_at: "blabla"
-};
-export default {
-  mounted() {
-    let elements = this.$refs.tag_list.getElementsByTagName("li");
-    for (let i = 0; i < elements.length; i++) {
-      elements[i].innerHTML =
-        "<i class='fas fa-search'></i> &nbsp;" + elements[i].innerHTML;
-    }
-  }
-};
-</script>

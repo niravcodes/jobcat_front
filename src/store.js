@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import axios from "@/helpers/axios"
 
 Vue.use(Vuex);
 
@@ -8,8 +9,9 @@ export default new Vuex.Store({
     thisuser: {
       id: 1,
       name: "",
-      image: "",
-      image: "",
+      fullname: "",
+      avatar: "generic.png",
+      email: "",
     },
     users: [
       {
@@ -130,8 +132,29 @@ export default new Vuex.Store({
     get_user_by_id: state => id => state.users.filter(val => val.id === id)[0],
 
     posts: state => state.posts,
-    post_by_id: state => id => state.posts.filter(val => val.id === id)[0]
+    post_by_id: state => id => state.posts.filter(val => val.id === id)[0],
+
+    userInfo: state => state.thisuser,
   },
-  mutations: {},
+  mutations: {
+    getuserinfo(state) {
+      axios
+        .post("users/info")
+        .then(usr => {
+          console.log(usr)
+          state.thisuser.username = usr.data.name;
+          state.thisuser.fullname = usr.data.fullname;
+          state.thisuser.id = usr.data._id;
+          if (usr.data.avatar && usr.data.avatar.length)
+            state.thisuser.avatar = usr.data.avatar + "?" + Date.now();
+          else
+            state.thisuser.avatar = "generic.png"
+        })
+        .catch(err => {
+          console.log(err)
+          console.log("error")
+        });
+    }
+  },
   actions: {}
 });

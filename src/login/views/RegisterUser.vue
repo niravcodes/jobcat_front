@@ -15,7 +15,7 @@
   </div>
 </template>
 <script>
-import axios from "axios";
+import axios from "@/helpers/axios";
 export default {
   data: function() {
     return {
@@ -37,7 +37,7 @@ export default {
 
       console.log(this.user);
       axios
-        .post("http://localhost:3000/users/register", this.user)
+        .post("users/register", this.user)
         .then(usr => {
           this.showError = false;
           this.userExists = false;

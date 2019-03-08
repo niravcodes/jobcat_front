@@ -1,4 +1,5 @@
 import axios from 'axios';
-const instance = axios.create({
-    baseURL: 'localhost:4000'
+const api = axios.create({
+    baseURL: window.location.protocol + "//" + window.location.hostname + ":" + "3000"
 });
+export default api;
