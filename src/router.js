@@ -23,10 +23,13 @@ export default new Router({
         import(/* webpackChunkName: "resume" */ "./views/Resume.vue")
     },
     {
-      path: "/settings",
-      name: "settings",
+      path: "/user/:username",
+      name: "user",
+      // route level code-splitting
+      // this generates a separate chunk (about.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
       component: () =>
-        import(/* webpackChunkName: "settings" */ "./views/Settings.vue")
+        import(/* webpackChunkName: "user" */ "./views/User.vue")
     },
     {
       path: "/logout",

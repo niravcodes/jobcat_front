@@ -1,35 +1,28 @@
 <template>
   <div class="resume_page">
     <div class="resume">
-      <div class="image" @click="changeimg">
-        <div class="changeimg" v-if="displayImageUploader">
-          <button class="closebutton" @click="exitupload">
-            <i class="far fa-times-circle"></i>
-          </button>
-          <image-upload/>
-        </div>
+      <div class="image">
         <img :src="userImage">
       </div>
 
-      <div class="details" v-if="!resEditMode">
-        <div class="name">{{ thisuser.fullname }}</div>
-        <button class="highlight but" @click="resEditMode=!resEditMode">Edit</button>
-        <div class="namedetail">{{ thisuser.resume.detail }}</div>
-        <div class="data" v-for="(elem,inde) in thisuser.resume.study" :key="'c' + inde">
+      <div class="details">
+        <div class="name">{{ userinquestion.fullname }}</div>
+        <div class="namedetail">{{ userinquestion.detail }}</div>
+        <div class="data" v-for="(elem,inde) in userinquestion.resume.study" :key="'c' + inde">
           Studied at
           <span class="highlight">{{ elem }}</span>
         </div>
-        <div class="data" v-for="(elem,index2) in thisuser.resume.work" :key="'A' + index2">
+        <div class="data" v-for="(elem,index2) in userinquestion.resume.work" :key="'A' + index2">
           Worked at
           <span class="highlight">{{ elem }}</span>
         </div>
-        <div class="data" v-for="(elem,index1) in thisuser.resume.intern" :key="'b' + index1">
+        <div class="data" v-for="(elem,index1) in userinquestion.resume.intern" :key="'b' + index1">
           Interned at
           <span class="highlight">{{ elem }}</span>
         </div>
         <div class="data">Interests:
           <ul ref="tag_list">
-            <li v-for="(element, index) in thisuser.resume.interests" :key="index">
+            <li v-for="(element, index) in userinquestion.resume.interests" :key="index">
               <i class="fas fa-heart"></i>
               &nbsp;
               {{ element }}
@@ -43,70 +36,39 @@
 
         <div class="data rating">Rating: **** (20 users rated)</div>
       </div>
-      <div class="details resumeedit" v-if="resEditMode">
-        Your Description:
-        <input v-model="resume.detail" class="descinput">
-        <br>Studies:
-        <tag-entry :list="thisuser.resume.study" @newitem="updatestudy"/>Internships:
-        <tag-entry :list="thisuser.resume.intern" @newitem="updateintern"/>Interests:
-        <tag-entry :list="thisuser.resume.interests" @newitem="updateinterest"/>Employments:
-        <tag-entry :list="thisuser.resume.work" @newitem="updatework"/>
-        <button @click="updateresume" class="resumebutton">Update</button>
-        <button @click="resEditMode = false" class="resumebutton">Exit without updating</button>
-      </div>
     </div>
   </div>
 </template>
 
 <script>
 // We use local data and don't overload the Vuex store because it's not frequently needed
-import imageUpload from "@/components/imageUpload";
-import tagEntry from "@/components/tagEntry";
 import axios from "@/helpers/axios";
 
 export default {
   data: function() {
     return {
-      displayImageUploader: false,
-      resEditMode: false,
-      projEditMode: false,
-      resume: {}
+      userinquestion: { resume: { study: ["", ""] } }
     };
   },
   methods: {
-    changeimg: function() {
-      this.displayImageUploader = true;
-    },
-    exitupload: function() {
-      setTimeout(() => {
-        this.displayImageUploader = false;
-      }, 10);
-    },
-    updateresume: function() {
-      console.log(this.resume);
-      axios
-        .post("users/resume", { resume: this.resume })
-        .then(() => {
-          console.log("done");
-          this.$store.commit("getuserinfo");
-          this.resEditMode = false;
-        })
-        .catch(err => console.log(err));
-    },
-    updateintern: function(elem) {
-      this.resume.intern = elem;
-    },
-    updatework: function(elem) {
-      this.resume.work = elem;
-    },
-    updateinterest: function(elem) {
-      this.resume.interests = elem;
-    },
-    updatestudy: function(elem) {
-      this.resume.study = elem;
-    },
-    updatedetail: function(elem) {
-      this.resume.detail = elem;
+    getdata: function() {
+      let name = this.$route.params.username;
+      let user = this.$store.getters.getuserbyname(name);
+      if (user == undefined) {
+        this.$store
+          .dispatch("downloadUserInfo", name)
+          .then(() => {
+            user = this.$store.getters.getuserbyname(name);
+            if (user == undefined) {
+              this.$router.push("/");
+            } else {
+              this.userinquestion = user;
+            }
+          })
+          .catch(err => console.log(err));
+      } else {
+        this.userinquestion = user;
+      }
     }
   },
   computed: {
@@ -118,23 +80,14 @@ export default {
         ":" +
         "3000" +
         "/images/" +
-        this.$store.getters.userInfo.avatar +
+        this.userinquestion.avatar +
         "?" +
         Date.now()
       );
-    },
-
-    thisuser: function() {
-      return this.$store.getters.userInfo;
     }
   },
   mounted() {
-    this.resume = this.thisuser.resume;
-    console.log(this.resume);
-  },
-  components: {
-    imageUpload,
-    tagEntry
+    this.getdata();
   }
 };
 </script>

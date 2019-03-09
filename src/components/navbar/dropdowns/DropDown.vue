@@ -25,10 +25,6 @@ export default {
           link: "resume"
         },
         {
-          name: "Settings",
-          link: "settings"
-        },
-        {
           name: "Logout",
           link: "logout"
         }

@@ -8,6 +8,8 @@
   padding: 30px;
   text-align: center;
   font-size: 20px;
+  color: #999;
+  margin-top: 20px;
 }
 </style>
 <script>

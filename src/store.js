@@ -12,31 +12,36 @@ export default new Vuex.Store({
       fullname: "",
       avatar: "generic.png",
       email: "",
+      resume: {}
     },
     users: [
       {
         id: 0,
         name: "Prasamsha Sigdel",
         image: "testhead3.jpg",
-        description: "Certified Heart Breaker"
+        description: "Certified Heart Breaker",
+        username: ""
       },
       {
         id: 1,
         name: "Mahima Sharma",
         image: "testhead2.jpg",
-        description: "Writer in NY times"
+        description: "Writer in NY times",
+        username: ""
       },
       {
         id: 2,
         name: "Gulabi Aankhen",
         image: "testhead4.jpg",
-        description: "Engineer at CNN"
+        description: "Engineer at CNN",
+        username: ""
       },
       {
         id: 3,
         name: "Shraddha Aryal",
         image: "testhead.png",
-        description: "Nanny in the House of Doom"
+        description: "Nanny in the House of Doom",
+        username: ""
       }
     ],
     posts: [
@@ -135,13 +140,21 @@ export default new Vuex.Store({
     post_by_id: state => id => state.posts.filter(val => val.id === id)[0],
 
     userInfo: state => state.thisuser,
+    getuserbyname: state => name => {
+      return state.users.filter((elem) => { return (elem.username == name) })[0];
+    },
+    getallusers: state => state.users
   },
   mutations: {
+    adduserincache(state, user) {
+      console.log(user)
+      state.users.push(user)
+    },
     getuserinfo(state) {
       axios
         .post("users/info")
         .then(usr => {
-          console.log(usr)
+          if (usr == null) return undefined
           state.thisuser.username = usr.data.name;
           state.thisuser.fullname = usr.data.fullname;
           state.thisuser.id = usr.data._id;
@@ -149,12 +162,43 @@ export default new Vuex.Store({
             state.thisuser.avatar = usr.data.avatar + "?" + Date.now();
           else
             state.thisuser.avatar = "generic.png"
+          if (usr.data.resume)
+            state.thisuser.resume = usr.data.resume;
+          else state.thisuser.resume = null
         })
         .catch(err => {
           console.log(err)
-          console.log("error")
         });
     }
   },
-  actions: {}
+  actions: {
+    downloadUserInfo(context, name) {
+      let user = {};
+      let state = context.state
+      let requireduser = state.users.filter((elem) => (elem.name == name));
+
+      if (requireduser.length == 0) {
+        return axios
+          .post("users/info", { requested: name })
+          .then(usr => {
+            if (usr.data === null) return undefined
+            user.username = usr.data.name;
+            user.fullname = usr.data.fullname;
+            user.id = usr.data._id;
+            if (usr.data.avatar && usr.data.avatar.length)
+              user.avatar = usr.data.avatar + "?" + Date.now();
+            else
+              user.avatar = "generic.png"
+            if (usr.data.resume)
+              user.resume = usr.data.resume;
+            else user.resume = null
+
+            context.commit('adduserincache', user)
+          })
+          .catch(err => {
+            console.log(err)
+          });
+      }
+    }
+  }
 });
