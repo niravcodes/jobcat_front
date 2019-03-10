@@ -1,66 +1,72 @@
 <template>
-  <div id="quicksearch" ref="quicksearch">
+  <div class="quicksearch" ref="quicksearch">
     <div class="scrolling_div" v-bar>
       <div>
         <ul>
-          <li>
+          <li v-for="(item,i) in items" :key="i" @click="gotoUser(item)">
             <div class="image">
-              <img src="img/testhead2.jpg">
+              <img :src="userImage(item.avatar)">
             </div>
-            <div class="name">Monkey Parsad</div>
-          </li>
-          <li>
-            <div class="image">
-              <img src="img/testhead2.jpg">
-            </div>
-            <div class="name">Monkey Parsad</div>
-          </li>
-          <li>
-            <div class="image">
-              <img src="img/testhead2.jpg">
-            </div>
-            <div class="name">Monkey Parsad</div>
-          </li>
-          <li>
-            <div class="image">
-              <img src="img/testhead2.jpg">
-            </div>
-            <div class="name">Monkey Parsad</div>
-          </li>
-          <li>
-            <div class="image">
-              <img src="img/testhead2.jpg">
-            </div>
-            <div class="name">Monkey Parsad</div>
-          </li>
-          <li>
-            <div class="image">
-              <img src="img/testhead2.jpg">
-            </div>
-            <div class="name">Monkey Parsad</div>
+            <div class="name">{{ item.fullname }}</div>
           </li>
         </ul>
       </div>
     </div>
 
-    <div id="search_further">
+    <div class="search_further">
       <router-link to="/fullsearch">Search {{ search_text }}</router-link>
     </div>
   </div>
 </template>
 <script>
+import axios from "@/helpers/axios";
+import debounce from "debounce";
 export default {
   data: function() {
-    return {};
+    return {
+      items: {}
+    };
+  },
+  watch: {
+    search_text: debounce(function(val) {
+      console.log(val);
+      axios
+        .post("search", { requested: val })
+        .then(usrs => {
+          console.log(usrs);
+          this.items = usrs.data.filter(dat => {
+            return dat.name !== this.$store.getters.userInfo.username;
+          });
+        })
+        .catch(err => console.log(err));
+    }, 350)
   },
   props: ["search_text"],
-  methods: {}
+  methods: {
+    userImage: function(img) {
+      return (
+        window.location.protocol +
+        "//" +
+        window.location.hostname +
+        ":" +
+        "3000" +
+        "/images/" +
+        img +
+        "?" +
+        Date.now()
+      );
+    },
+    gotoUser: function(item) {
+      this.$router.push({ name: "user", params: { username: item.name } });
+    }
+  },
+  computed: {}
 };
 </script>
 <style lang="scss" scoped>
 @import "variables";
 @import "navbarGlobal";
-#quicksearch {
+.quicksearch {
   width: $search_bar_length;
   height: $search_bar_height;
   position: absolute;
@@ -74,7 +80,7 @@ export default {
   grid-template-rows: 1fr auto;
 }
 
-#search_further {
+.search_further {
   padding: 8px;
   color: #ddd;
 }

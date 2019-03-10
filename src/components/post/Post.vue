@@ -4,19 +4,16 @@
       <img :src="img_location">
     </div>
     <div class="title">
-      <div class="name">{{ user_data.name }}</div>
-      <div class="nameinfo">{{ user_data.description }}</div>
+      <div class="name">{{ user_data.fullname }}</div>
+      <div class="nameinfo">{{ user_data.resume.detail }}</div>
     </div>
 
-    <div class="text">{{ post_data.post_text }}</div>
-
-    <proposal v-if="viewProposal"/>
-
-    <div class="buttons">
-      <button @click="toggleProposal">Submit Proposal</button>
-      <button>Inquire Further</button>
-      <button>View Details</button>
+    <div class="text">
+      {{ post_data.post }}
+      <button class="inlinebutton" @click="toggleProposal">{{ InquireFurther }}</button>
     </div>
+
+    <proposal v-if="viewProposal" :to="user_data.username"/>
   </div>
 </template>
 <script>
@@ -26,28 +23,64 @@ export default {
   data: function() {
     return {
       viewProposal: false,
-      postExpanded: false
+      postExpanded: false,
+      InquireFurther: " Inquire Further.",
+      user_data: { avatar: "generic.png", resume: {} },
+      post_data: {}
     };
   },
   methods: {
     toggleProposal() {
       this.viewProposal = !this.viewProposal;
       this.postExpanded = !this.postExpanded;
+      if (this.viewProposal) {
+        this.InquireFurther = " Close Inquiry Form.";
+      } else this.InquireFurther = " Inquire Further.";
+    },
+    userImage: function(img) {
+      return (
+        window.location.protocol +
+        "//" +
+        window.location.hostname +
+        ":" +
+        "3000" +
+        "/images/" +
+        img +
+        "?" +
+        Date.now()
+      );
+    },
+    getuserdata() {
+      let name = this.post_data.name;
+      let user = this.$store.getters.getuserbyname(name);
+      if (user == undefined) {
+        this.$store
+          .dispatch("downloadUserInfo", name)
+          .then(() => {
+            user = this.$store.getters.getuserbyname(name);
+            if (user == undefined) {
+              console.log("errornirav");
+            } else {
+              this.user_data = user;
+            }
+          })
+          .catch(err => console.log(err));
+      } else {
+        this.user_data = user;
+      }
     }
   },
   computed: {
-    post_data() {
-      return this.$store.getters.post_by_id(this.post_id);
-    },
-    user_data() {
-      return this.$store.getters.get_user_by_id(this.post_data.user_id);
-    },
     img_location: function() {
-      return "img/" + this.user_data.image;
+      return this.userImage(this.user_data.avatar);
     }
   },
   components: {
     Proposal
+  },
+  mounted() {
+    this.post_data = this.$store.getters.post_by_id(this.post_id);
+    this.getuserdata();
   }
 };
 </script>
@@ -55,6 +88,22 @@ export default {
 @import "../../assets/resets";
 .expandedPost {
   grid-template-rows: auto 1fr 1fr;
+}
+.inlinebutton {
+  background: none;
+  border: 0;
+  display: inline;
+  color: #00f;
+  text-decoration: underline;
+  font-family: serif;
+  font-size: 20px;
+  outline: none;
+  &:hover {
+    color: #0af;
+  }
+  &:active {
+    color: #77e;
+  }
 }
 .post {
   margin: 20px 0;
@@ -71,6 +120,7 @@ export default {
 
     img {
       width: 60px;
+      min-height: 60px;
     }
   }
 

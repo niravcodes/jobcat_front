@@ -17,10 +17,10 @@ router.beforeEach((to, from, next) => {
         axios
             .post("users/auth")
             .then(usr => {
-                alert("helo")
                 window.location.href = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port
             })
             .catch(err => {
+                window.location.href = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port
             });
         next();
     }

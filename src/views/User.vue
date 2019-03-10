@@ -60,7 +60,7 @@ export default {
           .then(() => {
             user = this.$store.getters.getuserbyname(name);
             if (user == undefined) {
-              this.$router.push("/");
+              // this.$router.push("/");
             } else {
               this.userinquestion = user;
             }

@@ -19,15 +19,18 @@ router.beforeEach((to, from, next) => {
       .post("users/auth")
       .then(usr => {
         // console.log(usr);
+        next();
       })
       .catch(err => {
         window.location.href = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/greeting"
       });
-    next();
   }
   else {
     window.location.href = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/greeting"
   }
+  setInterval(function () { store.dispatch("downloadMessages") }, 1000)
+
+
 })
 
 new Vue({

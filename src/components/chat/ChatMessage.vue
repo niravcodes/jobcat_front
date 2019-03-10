@@ -1,9 +1,9 @@
 <template>
   <div class="message">
     <div class="image">
-      <img :src="user_image">
+      <img :src="getImage(user_data.avatar)">
     </div>
-    <div class="text">{{ msg }} HHello There the angel from my nightmare the shadow in the</div>
+    <div class="text">{{ msg }}</div>
   </div>
 </template>
 
@@ -27,6 +27,7 @@
   margin: 5px;
   img {
     width: 50px;
+    min-height: 50px;
   }
 }
 </style>
@@ -34,14 +35,29 @@
 
 <script>
 export default {
-  props: ["user_id", "msg"],
+  props: ["name", "msg"],
   computed: {
     user_data() {
-      console.log(this.user_id);
-      return this.$store.getters.get_user_by_id(parseInt(this.user_id));
+      return this.$store.getters.getuserbyname(this.name);
     },
     user_image() {
-      return "img/" + this.user_data.image;
+      // return "img/" + this.user_data.image;
+      return "";
+    }
+  },
+  methods: {
+    getImage: function(img) {
+      return (
+        window.location.protocol +
+        "//" +
+        window.location.hostname +
+        ":" +
+        "3000" +
+        "/images/" +
+        img +
+        "?" +
+        Date.now()
+      );
     }
   }
 };

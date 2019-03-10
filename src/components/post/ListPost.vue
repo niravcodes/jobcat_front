@@ -1,6 +1,8 @@
 <template>
   <div id="postlist">
-    <post v-for="post in posts" :post_id="post.id" :key="post.id"/>
+    <div v-if="downloaded">
+      <post v-for="(post, index) in posts" :post_id="post._id" :key="index"/>
+    </div>
   </div>
 </template>
 
@@ -12,15 +14,20 @@ export default {
     msg: String
   },
   data: function() {
-    return {};
+    return {
+      downloaded: false,
+      posts: [{}]
+    };
   },
-  computed: {
-    posts() {
-      return this.$store.getters.posts;
-    }
-  },
+  computed: {},
   components: {
     Post
+  },
+  mounted() {
+    this.$store.dispatch("downloadPosts").then(() => {
+      this.posts = this.$store.getters.posts;
+      this.downloaded = true;
+    });
   }
 };
 </script>

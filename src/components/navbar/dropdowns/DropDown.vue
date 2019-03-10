@@ -22,11 +22,11 @@ export default {
       profile: [
         {
           name: "Resume",
-          link: "resume"
+          link: "/resume"
         },
         {
           name: "Logout",
-          link: "logout"
+          link: "/logout"
         }
       ]
     };

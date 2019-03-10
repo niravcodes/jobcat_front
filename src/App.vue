@@ -26,12 +26,6 @@
 import NavBar from "@/components/navbar/NavBar.vue";
 import FootBar from "@/components/FootBar.vue";
 export default {
-  created() {
-    if (localStorage.getItem("username") === "Nirav") {
-    } else {
-      document.location = "http://localhost:8080/greeting";
-    }
-  },
   components: {
     NavBar,
     FootBar

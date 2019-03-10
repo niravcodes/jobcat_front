@@ -2,11 +2,9 @@
   <div id="chatpeople">
     <div id="people_list" v-bar>
       <div>
-        <people-display
-          v-for="people in chat_people_filtered"
-          :key="people.sort_id"
-          :sort_id="people.sort_id"
-        />
+        <div v-if="loading">
+          <people-display v-for="people in chat_people_filtered" :key="people" :user="people"/>
+        </div>
       </div>
     </div>
     <div id="search">
@@ -20,11 +18,21 @@ import PeopleDisplay from "./PeopleDisplay.vue";
 export default {
   data: function() {
     return {
-      search_text: ""
+      search_text: "",
+      loading: false
     };
   },
   components: {
     PeopleDisplay
+  },
+  mounted() {
+    this.$store.dispatch(
+      "downloadUserInfo",
+      this.$store.getters.userInfo.username
+    );
+    this.$store.dispatch("downloadMessages").then(() => {
+      this.loading = true;
+    });
   },
   computed: {
     chat_people() {
@@ -36,14 +44,15 @@ export default {
       } else {
         let users_match = [];
         this.chat_people.forEach(user => {
-          let user_in_list = this.$store.getters.get_user_by_id(user.user_id);
-          console.log(user_in_list.name.toLowerCase());
+          let user_in_list = this.$store.getters.getuserbyname(user);
           if (
-            user_in_list &&
-            (user_in_list.name
-              .toLowerCase()
-              .includes(this.search_text.toLowerCase()) ||
-              user_in_list.description
+            (user_in_list &&
+              user_in_list.resume &&
+              user_in_list.fullname
+                .toLowerCase()
+                .includes(this.search_text.toLowerCase())) ||
+            (user_in_list.resume.detail &&
+              user_in_list.resume.detail
                 .toLowerCase()
                 .includes(this.search_text.toLowerCase()))
           ) {

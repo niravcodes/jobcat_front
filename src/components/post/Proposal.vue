@@ -1,12 +1,35 @@
 <template>
   <div class="proposal">
-    <textarea></textarea>
-    <button>Submit Proposal</button>
+    <textarea v-model="text"></textarea>
+    <button @click="submit">Submit Proposal</button>
   </div>
 </template>
 
 <script>
-export default {};
+import axios from "@/helpers/axios";
+export default {
+  props: ["to"],
+  data: function() {
+    return {
+      text: ""
+    };
+  },
+  methods: {
+    submit: function() {
+      console.log({ message: this.text, to: this.to });
+      axios
+        .post("msg/sendmessage", { message: this.text, to: this.to })
+        .then(() => {
+          //update sidebar
+          console.log("update sidebar");
+        })
+        .catch(err => {
+          console.log("error in sendmessage");
+          console.log(err);
+        });
+    }
+  }
+};
 </script>
 
 <style lang="scss">
